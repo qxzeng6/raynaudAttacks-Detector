@@ -1,2 +1,6 @@
-package com.raynaud.raynaudAttacksDetector.model;public enum Position {
+package com.raynaud.raynaudAttacksDetector.model;
+
+public enum Position {
+    INSIDE,
+    OUTSIDE
 }
