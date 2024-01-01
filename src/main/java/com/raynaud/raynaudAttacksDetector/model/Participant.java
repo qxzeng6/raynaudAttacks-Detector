@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDate;
+
 @Data
 @Entity
 @Table(name = "participants")
@@ -15,5 +17,6 @@ public class Participant {
     private Long participantId;
     private String userName;
     private String uuid;
+    private LocalDate LastAttackDate;
 
 }

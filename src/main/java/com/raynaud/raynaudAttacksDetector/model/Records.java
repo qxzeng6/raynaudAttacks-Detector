@@ -22,10 +22,6 @@ public class Records {
     @Column(length = 255)
     private String location;
 
-
-
-
-
     private String uuid;
 
 }

@@ -15,30 +15,43 @@ public class CliniciansSignInController {
 
     @PostMapping({"/signin","/register"})
 
-    public void requestDivider(@RequestBody ClinicianDto clinicianDto, HttpServletRequest request) {
+    public String requestDivider(@RequestBody ClinicianDto clinicianDto, HttpServletRequest request) {
 //        System.out.println("Request Divider");
 //        System.out.println(request.getRequestURI());
         if (request.getRequestURI().equals("/clinicians/signin")) {
-            signInClinician(clinicianDto);
+            return signInClinician(clinicianDto);
         }
         else if (request.getRequestURI().equals("/clinicians/register")) {
-            registerClinician(clinicianDto);
+            return registerClinician(clinicianDto);
+        }
+        else {
+            return "Invalid Request";
         }
     }
 
-    public void registerClinician(ClinicianDto clinicianDto) {
+    public String registerClinician(ClinicianDto clinicianDto) {
         System.out.println("Registering Clinician");
         System.out.println(clinicianDto.getUserName());
         System.out.println(clinicianDto.getPassword());
-        cliniciansServices.saveClinicians(clinicianDto.getUserName(),clinicianDto.getPassword());
+        String res = cliniciansServices.saveClinicians(clinicianDto.getUserName(),clinicianDto.getPassword());
+        System.out.println(res);
+        return res;
+
 
     }
 
-    public Boolean signInClinician(ClinicianDto clinicianDto) {
+    public String signInClinician(ClinicianDto clinicianDto) {
         System.out.println(clinicianDto.getUserName());
         System.out.println(clinicianDto.getPassword());
+        if (cliniciansServices.signInClinicians(clinicianDto.getUserName(),clinicianDto.getPassword())){
+            System.out.println("Clinician Signed In");
+            return "signIn successful";
+        }
+        else {
+            System.out.println("Clinician Not Signed In");
+            return "signIn unsuccessful";
+        }
 
-        return true;
     }
 
 

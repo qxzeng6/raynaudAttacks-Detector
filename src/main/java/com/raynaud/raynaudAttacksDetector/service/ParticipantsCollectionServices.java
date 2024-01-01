@@ -24,4 +24,6 @@ public class ParticipantsCollectionServices {
     public List<Participant> findAllParticipants() {
         return participantRepository.findAll();
     }
+
+
 }
