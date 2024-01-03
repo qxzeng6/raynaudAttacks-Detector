@@ -11,21 +11,22 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/participants")
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = {"http://localhost:52740,","http://localhost:4200"},allowCredentials = "true")
 
 public class ParticipantsAttackReportController {
     @Autowired
     private AttacksCollectionServices attacksService;
     @PostMapping("/report")
-    public String reportAttack(@RequestBody attackDto attackDto,@CookieValue(value = "participants", defaultValue = "notFound") String participantUuid) {
-        System.out.println(participantUuid);
-        return attacksService.reportAttack(attackDto,participantUuid);
+    public String reportAttack(@RequestBody attackDto attackDto) {
+        System.out.println(attackDto.getUuid());
+        System.out.println(attackDto.getUserName());
+        return attacksService.reportAttack(attackDto.getUserName(), attackDto.getUuid(), attackDto);
     }
 
-    @GetMapping("/dailyReport")
-    public List<Attacks> dailyReport(@CookieValue(value = "participants", defaultValue = "notFound") String participantUuid) {
-        System.out.println(participantUuid);
-        return attacksService.dailyReport(participantUuid);
+    @GetMapping("/dailyReport/{userName}")
+    public List<Attacks> dailyReport(@PathVariable("userName") String userName) {
+        System.out.println(userName);
+        return attacksService.dailyReport(userName);
     }
 
 

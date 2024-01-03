@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -64,7 +65,13 @@ public class CliniciansCollectionServices {
     }
 
     public List<Participant> findAllParticipants() {
-        return participantRepository.findAll();
+        List<Participant> participants = participantRepository.findAll();
+        Comparator<Participant> byLastAttackDate = Comparator
+                .comparing(Participant::getLastAttackDate, Comparator.nullsLast(Comparator.naturalOrder()));
+
+        participants.sort(byLastAttackDate);
+        return participants;
+
     }
 
 
@@ -74,7 +81,7 @@ public class CliniciansCollectionServices {
             return Collections.emptyList();
         }
         else{
-            return attacksRepository.findByUserName(userName);
+            return attacksRepository.findByUserNameWithin7Days(userName);
         }
     }
 }

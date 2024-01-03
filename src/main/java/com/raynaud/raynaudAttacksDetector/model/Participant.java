@@ -6,6 +6,7 @@ import lombok.Data;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -17,6 +18,7 @@ public class Participant {
     private Long participantId;
     private String userName;
     private String uuid;
-    private LocalDate LastAttackDate;
+    private LocalDateTime LastAttackDate;
+//    private String token;
 
 }

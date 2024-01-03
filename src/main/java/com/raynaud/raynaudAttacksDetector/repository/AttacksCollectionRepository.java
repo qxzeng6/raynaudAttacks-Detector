@@ -13,9 +13,11 @@ public interface AttacksCollectionRepository extends JpaRepository<Attacks, Long
 
     List<Attacks> findByUserName(String participantName);
 
-    default List<Attacks> findByUserNameWithin7Days(String participantName, LocalDate attackDate){
+    default List<Attacks> findByUserNameWithin7Days(String participantName){
+        LocalDate validDay = LocalDate.now().minusDays(7);
+        System.out.println(validDay);
         return findByUserName(participantName).stream()
-                .filter(attack -> attack.getAttackDate().isAfter(attackDate.minusDays(7)))
+                .filter(attack -> attack.getAttackDate().isAfter(validDay))
                 .sorted(Comparator.comparing(Attacks::getAttackDate))
                 .collect(Collectors.toList());
     }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -24,24 +25,22 @@ public class AttacksCollectionServices {
     public List<Attacks> findByUserName(String participantName){
         return attacksRepository.findByUserName(participantName);
     }
-    public String reportAttack(attackDto attackDto, String participantUuid) {
-        System.out.println("Reporting Attack");
-        System.out.println(attackDto.getPosition());
+    public String reportAttack(String participantName, String participantUuid,attackDto attackDto) {
+
         Attacks newAttack = new Attacks();
         if (participantsRepository.findByUuid(participantUuid).isEmpty()){
             return "Participant Not Found";
         }
         else{
-            String participantName = participantsRepository.findByUuid(participantUuid).get().getUserName();
             Participant participant = participantsRepository.findByUuid(participantUuid).get();
             System.out.println(participant);
-            participant.setLastAttackDate(LocalDate.now());
+            participant.setLastAttackDate(LocalDateTime.now());
             participantsRepository.save(participant);
             newAttack.setUuid(participantsRepository.findByUuid(participantUuid).get().getUuid());
             newAttack.setUserName(participantName);
 
         }
-        
+
         if (Objects.equals(attackDto.getPosition(), "outside")){
             newAttack.setLocation(Position.OUTSIDE);
         }
@@ -56,16 +55,16 @@ public class AttacksCollectionServices {
         return "Attack Reported";
     }
 
-    public List<Attacks> dailyReport(String participantUuid) {
+    public List<Attacks> dailyReport(String userName) {
         System.out.println("daily report Attacks");
-        if (participantsRepository.findByUuid(participantUuid).isEmpty()){
+        if (participantsRepository.findByUserName(userName).isEmpty()){
             return Collections.emptyList();
         }
         else{
-            String participantName = participantsRepository.findByUuid(participantUuid).get().getUserName();
-            LocalDate todayDate = LocalDate.now();
+            String participantName = participantsRepository.findByUserName(userName).get().getUserName();
+//            LocalDate todayDate = LocalDate.now();
             System.out.println(participantName);
-            return attacksRepository.findByUserNameWithin7Days(participantName,todayDate);
+            return attacksRepository.findByUserNameWithin7Days(participantName);
         }
 
     }

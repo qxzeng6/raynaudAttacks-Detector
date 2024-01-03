@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/clinicians")
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = {"http://localhost:52740,","http://localhost:4200"},allowCredentials = "true")
 public class CliniciansListController {
     @Autowired
     private CliniciansCollectionServices cliniciansServices;

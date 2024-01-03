@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ParticipantsCollectionServices {
@@ -23,6 +24,13 @@ public class ParticipantsCollectionServices {
 
     public List<Participant> findAllParticipants() {
         return participantRepository.findAll();
+    }
+
+    public Optional<Participant> findParticipantByUuid(String uuid){
+        return participantRepository.findByUuid(uuid);
+    }
+    public Optional<Participant> findParticipantByUseName(String userName){
+        return participantRepository.findByUserName(userName);
     }
 
 

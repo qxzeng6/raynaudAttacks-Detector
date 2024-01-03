@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/clinicians")
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = {"http://localhost:52740,","http://localhost:4200"},allowCredentials = "true")
 
 public class CliniciansSignInController {
     @Autowired
     private CliniciansCollectionServices cliniciansServices;
 
-    @PostMapping({"/signin","/register"})
+    @PostMapping(value = {"/signin","/register"})
 
     public String requestDivider(@RequestBody ClinicianDto clinicianDto, HttpServletRequest request) {
 //        System.out.println("Request Divider");
