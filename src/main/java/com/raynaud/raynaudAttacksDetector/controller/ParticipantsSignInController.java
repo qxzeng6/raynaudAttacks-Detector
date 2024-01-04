@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/participants")
-@CrossOrigin(origins = {"http://localhost:52740,","http://localhost:4200"},allowCredentials = "true")
+@CrossOrigin(origins = {"*","http://localhost:4200"})
 
 public class ParticipantsSignInController {
     @Autowired

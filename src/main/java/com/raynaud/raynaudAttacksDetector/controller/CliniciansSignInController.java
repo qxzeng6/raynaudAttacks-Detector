@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/clinicians")
-@CrossOrigin(origins = {"http://localhost:52740,","http://localhost:4200"},allowCredentials = "true")
+@CrossOrigin(origins = {"*","http://localhost:4200"})
 
 public class CliniciansSignInController {
     @Autowired

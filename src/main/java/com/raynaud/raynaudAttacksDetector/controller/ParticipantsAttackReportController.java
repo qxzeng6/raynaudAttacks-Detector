@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/participants")
-@CrossOrigin(origins = {"http://localhost:52740,","http://localhost:4200"},allowCredentials = "true")
+@CrossOrigin(origins = {"*","http://localhost:4200"})
 
 public class ParticipantsAttackReportController {
     @Autowired
