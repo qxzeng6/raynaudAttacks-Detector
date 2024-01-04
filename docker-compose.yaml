@@ -27,6 +27,6 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/raynaudAttacks2?allowPublicKeyRetrieval=true&useSSL=false&autoReconnect=true
     ports:
-      - '8080:8080'
+      - '80:8080'
 
 
