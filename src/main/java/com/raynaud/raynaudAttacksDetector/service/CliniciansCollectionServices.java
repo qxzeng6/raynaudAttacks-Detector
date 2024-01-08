@@ -1,6 +1,5 @@
 package com.raynaud.raynaudAttacksDetector.service;
-
-
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.raynaud.raynaudAttacksDetector.model.Attacks;
 import com.raynaud.raynaudAttacksDetector.model.Clinicians;
 import com.raynaud.raynaudAttacksDetector.model.Participant;
@@ -24,6 +23,7 @@ public class CliniciansCollectionServices {
     @Autowired
     private AttacksCollectionRepository attacksRepository;
 
+
     public List<Clinicians> findAllClinicians() {
         return cliniciansCollectionRepository.findAll();
     }
@@ -35,15 +35,16 @@ public class CliniciansCollectionServices {
     public String saveClinicians(String userName, String password) {
         System.out.println("Saving Clinician");
         if (cliniciansCollectionRepository.existsByUserName(userName)){
-
+            System.out.println("userName is exist");
             return "Clinician Unsaved";
         }
         else{
         Clinicians clinicians = new Clinicians();
         clinicians.setUserName(userName);
 //        String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
-        clinicians.setPassword(password);
-
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(password);
+        clinicians.setPassword(hashedPassword);
         cliniciansCollectionRepository.save(clinicians);
         return "Clinician Saved";
         }
@@ -54,14 +55,10 @@ public class CliniciansCollectionServices {
         System.out.println("Signing In Clinician");
         System.out.println(userName);
         System.out.println(password);
-        if (cliniciansCollectionRepository.existsByUserNameAndPassword(userName,password)){
-            System.out.println("Clinician Signed In");
-            return true;
-        }
-        else {
-            System.out.println("Clinician Not Signed In");
-            return false;
-        }
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return cliniciansCollectionRepository.findByUserName(userName)
+                .map(clinician -> passwordEncoder.matches(password, clinician.getPassword()))
+                .orElse(false);
     }
 
     public List<Participant> findAllParticipants() {

@@ -10,4 +10,6 @@ public interface CliniciansCollectionRepository extends JpaRepository<Clinicians
 
     Boolean existsByUserName(String userName);
     Boolean existsByUserNameAndPassword(String userName, String password);
+
+    Optional<Clinicians> findByUserName(String userName);
 }
