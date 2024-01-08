@@ -81,7 +81,7 @@ public class CliniciansCollectionServices {
             return Collections.emptyList();
         }
         else{
-            return attacksRepository.findByUserNameWithin7Days(userName);
+            return attacksRepository.findByUserName(userName);
         }
     }
 }
